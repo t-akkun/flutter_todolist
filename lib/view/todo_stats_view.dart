@@ -1,29 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:flutter_todolist/database/todo.dart';
-import 'package:flutter_todolist/database/todo_bloc.dart';
-import 'package:flutter_todolist/view/todo_add_view.dart';
+import 'package:flutter_todolist/database/todo_manager.dart';
 
 class TodoStatsView extends StatelessWidget {
-  final List<Todo> list;
+  final TodoManager list;
 
   TodoStatsView({@required this.list});
 
   //作業状況ページ
   @override
   Widget build(BuildContext context) {
-    final _bloc = Provider.of<TodoBloc>(context, listen: false);
 
-    //作業状況の確認
-    int _numActive = 0;
-    int _numCompleted = 0;
-    list.forEach((todo) {
-      if(todo.flag){
-        _numCompleted++;
-      }else{
-        _numActive++;
-      }
-    });
     return Center(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -38,7 +24,7 @@ class TodoStatsView extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(bottom: 24.0),
             child: Text(
-              "$_numCompleted",
+              list.getCompletedNum.toString(),
               style: Theme.of(context).textTheme.subtitle1,
             )),
         //作業中リスト数
@@ -51,7 +37,7 @@ class TodoStatsView extends StatelessWidget {
         Padding(
             padding: EdgeInsets.only(bottom: 24.0),
             child: Text(
-              "$_numActive",
+              list.getActiveNum.toString(),
               style: Theme.of(context).textTheme.subtitle1,
             )),
       ],

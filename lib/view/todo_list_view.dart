@@ -6,45 +6,24 @@ import 'package:flutter_todolist/database/todo_bloc.dart';
 
 class TodoListView extends StatefulWidget {
   final List<Todo> list;
-  final int state;
 
-  const TodoListView({@required this.list,@required this.state});
+  const TodoListView({@required this.list});
 
   @override
   _TodoListViewState createState() => _TodoListViewState();
 }
 
 class _TodoListViewState extends State<TodoListView> {
-  //フィルター用
-  static const int ALL = 0;
-  static const int ACTIVE = 1;
-  static const int COMPLETED = 2;
   @override
   Widget build(BuildContext context) {
     final _bloc = Provider.of<TodoBloc>(context, listen: false);
-    int _showState = widget.state;
     List<Todo> _list = widget.list;
-    List<Todo> _filteredList=List();
 
-    //フィルター
-    _list.forEach((todo) {
-      switch (_showState) {
-        case ALL:
-          _filteredList.add(todo);
-          break;
-        case ACTIVE:
-          if (!todo.flag) _filteredList.add(todo);
-          break;
-        case COMPLETED:
-          if (todo.flag) _filteredList.add(todo);
-          break;
-      }
-    });
     //Todoリストの一覧表示
     return ListView.builder(
-      itemCount: _filteredList.length,
+      itemCount: _list.length,
       itemBuilder: (BuildContext context, int index) {
-        Todo todo = _filteredList[index];
+        Todo todo = _list[index];
         return Dismissible(
           key: Key(todo.id),
           onDismissed: (direction) {
