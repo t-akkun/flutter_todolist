@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todolist/database/todo.dart';
+import 'package:flutter_todolist/database/todo_bloc.dart';
 
 class TodoAddView extends StatelessWidget {
 //Todoリストの追加と編集
   final Todo todo;
   final Todo _newTodo = Todo.newTodo();
-  final bloc;
+  final TodoBloc bloc;
   //validator用
-  final _titleKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _titleKey = GlobalKey<FormState>();
 
   //追加か編集かチェック
   bool get isEditing => _newTodo.id != null;

@@ -16,7 +16,7 @@ class TodoListView extends StatefulWidget {
 class _TodoListViewState extends State<TodoListView> {
   @override
   Widget build(BuildContext context) {
-    final _bloc = Provider.of<TodoBloc>(context, listen: false);
+    final TodoBloc _bloc = Provider.of<TodoBloc>(context, listen: false);
     List<Todo> _list = widget.list;
 
     //Todoリストの一覧表示

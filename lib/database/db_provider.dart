@@ -11,7 +11,7 @@ class DBProvider {
   static final DBProvider db = DBProvider._();
 
   static Database _database;
-  static final _tableName = "TodoList";
+  static final String _tableName = "TodoList";
 
 
   Future<Database> get database async {
@@ -24,7 +24,6 @@ class DBProvider {
   }
 
   Future<Database> initDB() async {
-    print("initDB");
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
 
     String path = join(documentsDirectory.path, "TodoDB.db");
@@ -33,7 +32,6 @@ class DBProvider {
   }
 
   Future<void> _createTable(Database db, int version) async {
-print("createTable");
     return await db.execute(
       "CREATE TABLE $_tableName ("
       "id TEXT PRIMARY KEY,"
@@ -45,13 +43,13 @@ print("createTable");
   }
 
   createTodo(Todo todo) async {
-    final db = await database;
+    final Database db = await database;
     var res = await db.insert(_tableName, todo.toMap());
     return res;
   }
 
   getAllTodos() async {
-    final db = await database;
+    final Database db = await database;
     var res = await db.query(_tableName);
     List<Todo> list =
         res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
@@ -59,7 +57,7 @@ print("createTable");
   }
 
   updateTodo(Todo todo) async {
-    final db = await database;
+    final Database db = await database;
     var res  = await db.update(
       _tableName, 
       todo.toMap(),
@@ -70,7 +68,7 @@ print("createTable");
   }
 
   deleteTodo(String id) async {
-    final db = await database;
+    final Database db = await database;
     var res = db.delete(
       _tableName,
       where: "id = ?",

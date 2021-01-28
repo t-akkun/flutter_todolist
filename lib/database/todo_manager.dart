@@ -7,11 +7,14 @@ class TodoManager {
   static const int ACTIVE = 1;
   static const int COMPLETED = 2;
 
-  final List<Todo> list;
+  List<Todo> _list;
 
-  TodoManager({@required this.list});
+  TodoManager(List<Todo> list) {
+    this._list = list;
+  }
 
-  List<Todo> filteredTodo(int state) => list.where((todo) {
+  List<Todo> filteredTodo(int state) =>
+      _list.where((todo) {
         switch (state) {
           case ACTIVE:
             return !todo.flag;
@@ -24,20 +27,20 @@ class TodoManager {
       }).toList();
 
   List<Todo> markAllComplete() {
-    final allCompleted = isAllComplete;
+    final bool allCompleted = isAllComplete;
 
-    list.forEach((todo) => todo.flag = !allCompleted);
-    return list;
+    _list.forEach((todo) => todo.flag = !allCompleted);
+    return _list;
   }
 
-  List<Todo> get getList => list != null ? list : [];
+  List<Todo> get getList => _list != null ? _list : [];
 
-  bool get isAllComplete => list.every((todo) => todo.flag);
+  bool get isAllComplete => _list.every((todo) => todo.flag);
 
-  bool get hasCompleted => list.any((todo) => todo.flag);
+  bool get hasCompleted => _list.any((todo) => todo.flag);
 
-  int get getActiveNum => list.fold(0, (sum, todo) => !todo.flag ? ++sum : sum);
+  int get getActiveNum => _list.fold(0, (sum, todo) => !todo.flag ? ++sum : sum);
 
   int get getCompletedNum =>
-      list.fold(0, (sum, todo) => todo.flag ? ++sum : sum);
+      _list.fold(0, (sum, todo) => todo.flag ? ++sum : sum);
 }

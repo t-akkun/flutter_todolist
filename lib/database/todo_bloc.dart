@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 
 class TodoBloc {
 
-  final _todoController = BehaviorSubject<List<Todo>>();
+  final BehaviorSubject<List<Todo>> _todoController = BehaviorSubject<List<Todo>>();
   Stream<List<Todo>> get todoStream => _todoController.stream;
 
   getTodos() async {

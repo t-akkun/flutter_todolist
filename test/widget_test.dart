@@ -5,25 +5,36 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_todolist/home_screen.dart';
+import 'package:flutter_todolist/database/todo.dart';
+import 'package:flutter_todolist/database/todo_manager.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(HomeScreen());
+  List<Todo> list = [
+    Todo(title: 'a', flag: false),
+    Todo(title: 'b', flag: false),
+    Todo(title: 'c', flag: true)
+  ];
+  TodoManager manager = TodoManager(list);
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('TodoManagerのチェック', () {
+    expect(manager.hasCompleted, true);
+    expect(manager.isAllComplete, false);
+    expect(manager.getActiveNum, 2);
+    expect(manager.getCompletedNum, 1);
+  });
+  test('markAllCompleteのチェック',(){
+    manager.markAllComplete();
+    expect(manager.hasCompleted, true);
+    expect(manager.isAllComplete,true);
+    expect(manager.getActiveNum,0);
+    expect(manager.getCompletedNum,3);
+  });
+  test('markAllCompleteの2度目チェック',(){
+    manager.markAllComplete();
+    expect(manager.hasCompleted, false);
+    expect(manager.isAllComplete,false);
+    expect(manager.getActiveNum,3);
+    expect(manager.getCompletedNum,0);
   });
 }

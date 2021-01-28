@@ -15,8 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  static const LIST_VIEW = 0;
-  // static const STATS_VIEW = 1;
+  static const int LIST_VIEW = 0;
+  // static const int STATS_VIEW = 1;
   int _index = LIST_VIEW;
 
   //フィルター用
@@ -31,8 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _bloc = Provider.of<TodoBloc>(context, listen: false);
-    //フィルター用
+    final TodoBloc _bloc = Provider.of<TodoBloc>(context, listen: false);
     TodoManager _manager;
 
     return Scaffold(
@@ -95,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
           stream: _bloc.todoStream,
           builder: (BuildContext context, AsyncSnapshot<List<Todo>> snapshot) {
             if (snapshot.hasData) {
-              _manager= TodoManager(list:snapshot.data);
+              _manager= TodoManager(snapshot.data);
               return _index == LIST_VIEW
                   ? TodoListView(list: _manager.filteredTodo(_showState))
                   : TodoStatsView(list: _manager);
