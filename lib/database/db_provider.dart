@@ -42,22 +42,22 @@ class DBProvider {
     );
   }
 
-  createTodo(Todo todo) async {
-    final Database db = await database;
+  Future<int> createTodo(Todo todo) async {
+    final db = await database;
     var res = await db.insert(_tableName, todo.toMap());
     return res;
   }
 
-  getAllTodos() async {
-    final Database db = await database;
+  Future<List<Todo>> getAllTodos() async {
+    final db = await database;
     var res = await db.query(_tableName);
     List<Todo> list =
         res.isNotEmpty ? res.map((c) => Todo.fromMap(c)).toList() : [];
     return list;
   }
 
-  updateTodo(Todo todo) async {
-    final Database db = await database;
+  Future<int> updateTodo(Todo todo) async {
+    final db = await database;
     var res  = await db.update(
       _tableName, 
       todo.toMap(),
@@ -67,8 +67,8 @@ class DBProvider {
     return res;
   }
 
-  deleteTodo(String id) async {
-    final Database db = await database;
+  Future<int> deleteTodo(String id) async {
+    final db = await database;
     var res = db.delete(
       _tableName,
       where: "id = ?",

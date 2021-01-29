@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   static const int LIST_VIEW = 0;
+
   // static const int STATS_VIEW = 1;
   int _index = LIST_VIEW;
 
@@ -73,9 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
           onSelected: (state) {
             setState(() {
               if (state == MARK_ALL)
-                _manager.markAllComplete().forEach((todo) {_bloc.update(todo);});
+                _manager.markAllComplete().forEach((todo) {
+                  _bloc.update(todo);
+                });
               if (state == CLEAR)
-                _manager.getList.forEach((todo) {if (todo.flag) _bloc.delete(todo.id);});;
+                _manager.getList.forEach((todo) {
+                  if (todo.flag) _bloc.delete(todo.id);
+                });
+              ;
             });
           },
           itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
@@ -94,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
           stream: _bloc.todoStream,
           builder: (BuildContext context, AsyncSnapshot<List<Todo>> snapshot) {
             if (snapshot.hasData) {
-              _manager= TodoManager(snapshot.data);
+              _manager = TodoManager(snapshot.data);
               return _index == LIST_VIEW
                   ? TodoListView(list: _manager.filteredTodo(_showState))
                   : TodoStatsView(list: _manager);

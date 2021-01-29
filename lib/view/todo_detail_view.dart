@@ -17,10 +17,11 @@ class TodoDetailView extends StatefulWidget {
 class _TodoDetailViewState extends State<TodoDetailView> {
   Todo todo;
   TodoBloc bloc;
+
   @override
   Widget build(BuildContext context) {
     //初回のみ初期化
-    if(todo==null) {
+    if (todo == null) {
       todo = widget.todo;
       bloc = widget.bloc;
     }
@@ -51,7 +52,7 @@ class _TodoDetailViewState extends State<TodoDetailView> {
                     value: todo.flag,
                     onChanged: (flag) {
                       setState(() {
-                        todo.flag=flag;
+                        todo.flag = flag;
                         print(flag);
                         bloc.update(todo);
                       });
@@ -102,7 +103,7 @@ class _TodoDetailViewState extends State<TodoDetailView> {
           ).then((newTodo) {
             setState(() {
               if (newTodo != null) {
-                todo=newTodo;
+                todo = newTodo;
               }
             });
           });

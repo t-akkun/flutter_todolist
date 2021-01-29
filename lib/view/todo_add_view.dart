@@ -7,6 +7,7 @@ class TodoAddView extends StatelessWidget {
   final Todo todo;
   final Todo _newTodo = Todo.newTodo();
   final TodoBloc bloc;
+
   //validator用
   final GlobalKey<FormState> _titleKey = GlobalKey<FormState>();
 

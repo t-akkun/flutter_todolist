@@ -23,18 +23,18 @@ void main() {
     expect(manager.getActiveNum, 2);
     expect(manager.getCompletedNum, 1);
   });
-  test('markAllCompleteのチェック',(){
+  test('markAllCompleteのチェック', () {
     manager.markAllComplete();
     expect(manager.hasCompleted, true);
-    expect(manager.isAllComplete,true);
-    expect(manager.getActiveNum,0);
-    expect(manager.getCompletedNum,3);
+    expect(manager.isAllComplete, true);
+    expect(manager.getActiveNum, 0);
+    expect(manager.getCompletedNum, 3);
   });
-  test('markAllCompleteの2度目チェック',(){
+  test('markAllCompleteの2度目チェック', () {
     manager.markAllComplete();
     expect(manager.hasCompleted, false);
-    expect(manager.isAllComplete,false);
-    expect(manager.getActiveNum,3);
-    expect(manager.getCompletedNum,0);
+    expect(manager.isAllComplete, false);
+    expect(manager.getActiveNum, 3);
+    expect(manager.getCompletedNum, 0);
   });
 }
