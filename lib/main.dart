@@ -9,12 +9,11 @@ class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Vanilla Example' ,
+      title: 'Vanilla Example',
       home: Provider<TodoBloc>(
           create: (context) => new TodoBloc(),
           dispose: (context, bloc) => bloc.dispose(),
-          child: HomeScreen()
-      ),
+          child: HomeScreen()),
     );
   }
 }

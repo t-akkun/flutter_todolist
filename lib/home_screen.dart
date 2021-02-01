@@ -109,6 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }),
 //Todoリストの追加ボタン
       floatingActionButton: FloatingActionButton(
+        key: Key('addButton'),
         onPressed: () {
           Navigator.push(
               context,

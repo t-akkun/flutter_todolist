@@ -35,6 +35,7 @@ class TodoAddView extends StatelessWidget {
       ),
       //完了ボタン
       floatingActionButton: FloatingActionButton(
+        key: Key('finishButton'),
         onPressed: () {
           if (_titleKey.currentState.validate()) {
             if (_newTodo.id == null) {
@@ -56,6 +57,7 @@ class TodoAddView extends StatelessWidget {
   Widget _titleTextFormField() => Form(
       key: _titleKey,
       child: TextFormField(
+        key: Key('titleForm'),
         validator: (title) {
           if (title == "") {
             return ('Todoを入力してください。');
@@ -71,6 +73,7 @@ class TodoAddView extends StatelessWidget {
 
   //メモ入力フォーム
   Widget _noteTextFormField() => TextFormField(
+        key: Key('noteForm'),
         decoration: InputDecoration(labelText: "Additional Notes..."),
         initialValue: _newTodo.note,
         maxLines: 3,
