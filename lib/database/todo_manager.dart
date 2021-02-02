@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_todolist/database/todo.dart';
 
 class TodoManager {
@@ -13,8 +12,7 @@ class TodoManager {
     this._list = list;
   }
 
-  List<Todo> filteredTodo(int state) =>
-      _list.where((todo) {
+  List<Todo> filteredTodo(int state) => _list.where((todo) {
         switch (state) {
           case ACTIVE:
             return !todo.flag;
@@ -39,7 +37,8 @@ class TodoManager {
 
   bool get hasCompleted => _list.any((todo) => todo.flag);
 
-  int get getActiveNum => _list.fold(0, (sum, todo) => !todo.flag ? ++sum : sum);
+  int get getActiveNum =>
+      _list.fold(0, (sum, todo) => !todo.flag ? ++sum : sum);
 
   int get getCompletedNum =>
       _list.fold(0, (sum, todo) => todo.flag ? ++sum : sum);

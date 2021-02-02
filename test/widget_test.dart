@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_todolist/database/todo.dart';
 import 'package:flutter_todolist/database/todo_manager.dart';
-import 'package:flutter_todolist/home_screen.dart';
+import 'package:flutter_todolist/main.dart';
 
 void main() {
   test('TodoManagerのチェック', () {
@@ -58,7 +58,7 @@ void main() {
     final titleForm = find.byKey(Key('titleForm'));
     final noteForm = find.byKey(Key('noteForm'));
 
-    await tester.pumpWidget(HomeScreen());
+    await tester.pumpWidget(TodoApp());
 
     await tester.tap(addButton);
     await tester.pumpAndSettle();
