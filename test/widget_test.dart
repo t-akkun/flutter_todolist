@@ -10,7 +10,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_todolist/database/todo.dart';
 import 'package:flutter_todolist/database/todo_manager.dart';
 import 'package:flutter_todolist/main.dart';
-import 'package:flutter_todolist/view/todo_list_view.dart';
 
 void main() {
   //Unitテスト
