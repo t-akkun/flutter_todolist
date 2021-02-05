@@ -30,6 +30,7 @@ class _TodoDetailViewState extends State<TodoDetailView> {
         title: Text('Todo Details'),
         actions: [
           IconButton(
+            key: Key('deleteButton'),
             icon: Icon(Icons.delete),
             onPressed: () {
               bloc.delete(todo.id);
