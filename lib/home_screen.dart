@@ -6,6 +6,7 @@ import 'package:flutter_todolist/database/todo_bloc.dart';
 import 'package:flutter_todolist/database/todo_manager.dart';
 import 'package:flutter_todolist/widget/extra_action_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_todolist/widget/filter_button.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -22,10 +23,10 @@ class _HomeScreenState extends State<HomeScreen> {
   int _index = LIST_VIEW;
 
   //フィルター用
-  int _showState = 0;
   static const int ALL = 0;
   static const int ACTIVE = 1;
   static const int COMPLETED = 2;
+  int showState = ALL;
 
   //追加アクション用
   static const int MARK_ALL = 0;
@@ -36,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final TodoBloc _bloc = Provider.of<TodoBloc>(context, listen: false);
     TodoManager _manager;
 
-    void onSelected(state) {
+    //ExtraActionsButtonのonSelected
+    void onExtraActionSelected(state) {
       setState(() {
         if (state == MARK_ALL)
           _manager.markAllComplete().forEach((todo) {
@@ -49,44 +51,24 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     }
 
-    void setExtraActionFlag(TodoManager manager) {}
+    //FilterButtonのonSelected
+    void onFilterSelected(state) {
+      setState(() {
+        showState = state;
+      });
+    }
+
     ExtraActionsButton extraActionsButton =
-        ExtraActionsButton(onSelected: onSelected);
+        ExtraActionsButton(onSelected: onExtraActionSelected);
+    FilterButton filterButton = FilterButton(
+      onSelected: onFilterSelected,
+      showState: showState,
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text("Vanilla Example"), actions: [
         //フィルターのアクションボタン
-        if (_index == LIST_VIEW)
-          PopupMenuButton(
-            onSelected: (state) {
-              setState(() {
-                _showState = state;
-              });
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
-              PopupMenuItem(
-                  child: Text("Show All",
-                      style: TextStyle(
-                          color:
-                              _showState == ALL ? Colors.blue : Colors.black)),
-                  value: ALL),
-              PopupMenuItem(
-                  child: Text("Show Active",
-                      style: TextStyle(
-                          color: _showState == ACTIVE
-                              ? Colors.blue
-                              : Colors.black)),
-                  value: ACTIVE),
-              PopupMenuItem(
-                  child: Text("Show Completed",
-                      style: TextStyle(
-                          color: _showState == COMPLETED
-                              ? Colors.blue
-                              : Colors.black)),
-                  value: COMPLETED),
-            ],
-            icon: Icon(Icons.filter_list),
-          ),
+        if (_index == LIST_VIEW) filterButton,
         //追加アクションのアクションボタン
         extraActionsButton
       ]),
@@ -97,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
               _manager = TodoManager(snapshot.data);
               extraActionsButton.setFlag(_manager);
               return _index == LIST_VIEW
-                  ? TodoListView(list: _manager.filteredTodo(_showState))
+                  ? TodoListView(list: _manager.filteredTodo(showState))
                   : TodoStatsView(list: _manager);
             }
             return Center(child: CircularProgressIndicator());
